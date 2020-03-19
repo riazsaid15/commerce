@@ -1,0 +1,11 @@
+name: Comment limit
+type: module
+description: Limit comments per field and user
+# core: 8.x
+package: Comment limit
+
+# Information added by Drupal.org packaging script on 2016-09-25
+version: '8.x-1.0-alpha1'
+core: '8.x'
+project: 'comment_limit'
+datestamp: 1474795147

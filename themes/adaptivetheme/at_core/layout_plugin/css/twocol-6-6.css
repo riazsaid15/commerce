@@ -1,0 +1,18 @@
+.atl__lr {
+  margin: 0 -0.625em;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.atl__lc {
+  flex: 0 0 auto;
+  padding: 0 0.625em;
+  width: 100%;
+}
+
+.bp--at-core-simple-wide .atl--twocol-6-6.l-arc--2 > .atl__cw > .atl__lc,
+.bp--at-core-simple-tablet-isolate .atl--twocol-6-6.l-arc--2 > .atl__cw > .atl__lc {
+  width: 50%;
+}

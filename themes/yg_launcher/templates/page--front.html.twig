@@ -1,0 +1,80 @@
+
+  {% for bg_imager_content in bg_imager_content %}
+      {{ bg_imager_content | raw }}
+   {% endfor %}
+      <h1 id="fh5co-logo">{{ page.site_branding }}</h1>
+  </aside>
+  <div id="fh5co-main-content">
+    <div class="dt js-dt">
+      <div class="dtc js-dtc">
+        <div id="clockdiv" class="animate-box" data-animate-effect="fadeInUp">
+          <div>
+          <div class="date_expired"></div>
+            <span class="days"></span>
+            <div class="smalltext">Days</div>
+          </div>
+          <div>
+            <span class="hours"></span>
+            <div class="smalltext">Hours</div>
+          </div>
+          <div>
+            <span class="minutes"></span>
+            <div class="smalltext">Minutes</div>
+          </div>
+          <div>
+            <span class="seconds"></span>
+            <div class="smalltext">Seconds</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-lg-7">
+                <div class="fh5co-intro animate-box">
+                {% if title|render is not empty %}
+                  <h2>{{ title }}</h2>
+                {% endif %}
+                {% if description|render is not empty %}
+                  <p>{{ description }}</p>
+                {% endif %}
+                </div>
+              </div>
+              <div class="col-lg-7 animate-box"> 
+                  {{ page.subscribe }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div id="fh5co-footer">
+      <div class="row">
+        <div class="col-md-5">
+          <ul id="fh5co-social">
+            {% if facebook_url|render is not empty %}
+              <li><a href="{{ facebook_url }}"><i class="icon-facebook"></i></a></li>
+            {% endif %}
+            {% if twitter_url|render is not empty %}
+              <li><a href="{{ twitter_url }}"><i class="icon-twitter"></i></a></li>
+            {% endif %}   
+            {% if instagram_url|render is not empty %}
+              <li><a href="{{ instagram_url }}"><i class="icon-instagram"></i></a></li>
+            {% endif %}
+            {% if google_plus_url|render is not empty %}
+              <li><a href="{{ google_plus_url }}"><i class="icon-google-plus"></i></a></li>
+            {% endif %}
+            {% if pinterest_url|render is not empty %}
+            <li><a href="{{ pinterest_url }}"><i class="icon-pinterest-square"></i></a></li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="col-md-7 fh5co-copyright">
+          {% if footer_desc %}{{ footer_desc|raw }}{% endif %}
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+

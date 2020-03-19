@@ -1,0 +1,142 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\commerce_product\Entity\ProductVariation;
+use Drupal\commerce_product\Entity\Product;
+use Drupal\commerce_price\Price;
+use Drupal\node\Entity\Node;
+
+
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_page_attachments().
+ *
+ * @param array $attachments
+ */
+function drupak_commerce_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'drupak_commerce/library';
+
+}
+
+/**
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
+ */
+
+
+function drupak_commerce_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // kint($form_id);
+  // kint($form['comment']['widget'][0]['status']['#default_value']);
+  if ($form_id == 'private_message_add_form') {
+
+    $value = \Drupal::request()->query->get('nid');
+    if (!empty($value)) {
+      // kint($value);
+      $node = Node::load($value);
+      $form['field_node_reference']['widget'][0]['target_id']['#default_value'] = $node;
+    }
+    $form['field_node_reference']['widget'][0]['target_id']['#attributes']['disabled'] = 'disabled';
+  }
+
+}
+
+/**
+ *
+ */
+function drupak_commerce_entity_insert(EntityInterface $entity) {
+  if ($entity->bundle() == "article") {
+
+    $featured = $entity->get('field_featured')->getValue()[0]['value'];
+    if ($featured == 'no') {
+      $nid = $entity->get('nid')->getValue()[0]['value'];
+      $price = $entity->get('field_product_price')->getValue()[0]['number'];
+      // $type = $entity->get('field_question_type')->getValue()[0]['value'];
+      $currency = $entity->get('field_product_price')
+        ->getValue()[0]['currency_code'];
+      $sku = rand(10, 100);
+
+      $variation_red_medium = ProductVariation::create([
+        'type' => 'default',
+        'sku' => $sku,
+        'price' => new Price($price, $currency),
+        // 'attribute_color' => 'Red',
+        //            'attribute_size' => 'Medium',
+      ]);
+      $variation_red_medium->save();
+
+      $product = Product::create([
+        'uid' => 1,
+        'type' => 'default',
+        'title' => t('Drupak v'),
+        'stores' => [1],
+        'variations' => [$variation_red_medium],
+        'field_question_reference_to' => [$nid],
+      ]);
+      $product->save();
+
+      $query = \Drupal::entityQuery('commerce_product')
+        ->condition('type', 'default')
+        ->condition('field_question_reference_to', $nid);
+      $p_info = $query->execute();
+
+      foreach ($p_info as $p) {
+        $pid = $p;
+      }
+
+      $productObj = Product::load($pid);
+      $product_variation_id = $productObj->get('variations')
+        ->getValue()[0]['target_id'];
+      $storeId = $productObj->get('stores')->getValue()[0]['target_id'];
+
+      $entity_manager = \Drupal::entityManager();
+
+      $variationobj = $entity_manager->getStorage('commerce_product_variation')
+        ->load($product_variation_id);
+      $store = $entity_manager->getStorage('commerce_store')->load($storeId);
+
+      $cart_manager = \Drupal::service('commerce_cart.cart_manager');
+      $cart_provider = \Drupal::service('commerce_cart.cart_provider');
+
+      $cart = $cart_provider->getCart('default', $store);
+      if (!$cart) {
+        $cart = $cart_provider->createCart('default', $store);
+      }
+
+      // Create new order item.
+      $order_item = $entity_manager->getStorage('commerce_order_item')->create([
+        'type' => 'default',
+        'purchased_entity' => (string) $product_variation_id,
+        'quantity' => 1,
+        'unit_price' => $variationobj->getPrice(),
+      ]);
+      $order_item->save();
+      $cart_manager->addOrderItem($cart, $order_item);
+
+      // $url = Url::fromUri('internal:/articles'); // choose a path
+      $id = $cart->id();
+      $path = "internal:/checkout/$id/order_information";
+      // Choose a path.
+      $url = Url::fromUri($path);
+      $destination = $url->toString();
+      // ksm($destination);
+      // We want to redirect user on login.
+      $response = new RedirectResponse($destination, 301);
+      $response->send();
+      return;
+      // setRedirect('commerce_checkout.form', ['commerce_order' => $cart->id()])
+    }
+  }
+  if ($entity->bundle() == 'comment') {
+    kint($entity);
+    exit;
+  }
+
+}

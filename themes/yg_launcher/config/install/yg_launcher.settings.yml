@@ -1,0 +1,20 @@
+#Launcher theme settings
+
+facebook_url: 'https://www.facebook.com/'
+twitter_url: 'https://twitter.com/'
+google_plus_url: 'https://plus.google.com/'
+instagram_url: 'http://www.instagram.com/'
+pinterest_url: 'https://www.pinterest.com/'
+title: 'YG Launcher launching Soon!'
+description: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.'
+footer_desc:
+  value: 'Drupal 8 Theme by: <a href="https://www.youngglobes.com">Young Globes</a>. HTML by <a href="http://freehtml5.co/">FreeHTML5.co</a>'
+  format: 'basic_html'
+date: '2019-01-01'
+custom_message: 'Date is expired'
+
+rss_url: 'rss.xml'
+show_social_icon: 1
+show_credit_link: 1
+slideshow_display: 1
+

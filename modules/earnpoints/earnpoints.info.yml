@@ -1,0 +1,7 @@
+name: Earn Points
+type: module
+description: User Earn Points on product purching.
+core: 8.x
+package: Earn Points
+dependencies:
+  - commerce

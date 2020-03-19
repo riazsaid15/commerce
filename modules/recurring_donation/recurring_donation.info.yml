@@ -1,0 +1,13 @@
+name: 'Recurring PayPal Donations'
+type: module
+description: 'Provides a PayPal block with donation forms.'
+# core: '8.x'
+# project: 'Recurring PayPal donations'
+package: 'PayPal'
+configure: recurring_donation.configure
+
+# Information added by Drupal.org packaging script on 2019-06-06
+version: '8.x-2.0'
+core: '8.x'
+project: 'recurring_donation'
+datestamp: 1559842687

@@ -1,0 +1,200 @@
+
+
+
+#clockdiv > div{
+	display: inline-block;
+	padding: 1% 2.3% 5% 0%;
+}
+
+#clockdiv div > span{
+	font-size: 100px;
+    color: #1c1c1c;
+    display: block;
+    font-weight: 800;
+    line-height: 100px;
+}
+
+.smalltext{
+	display: block;
+    text-align: left;
+    margin: 0% 8%;
+    font-weight: 700;
+    color: #a7a7a7;
+}
+.region.region-header {
+    padding-top: 20px;
+    text-align: center !important;
+}
+#fh5co-aside #fh5co-logo a.navbar-brand {
+    font-weight: 800 !important;
+    letter-spacing: -3px !important;
+    color: #fff !important;
+    float: none !important; 
+    height: 50px !important;
+    /*padding: 0% 13% 0% 0% !important;*/
+    padding: 0px !important;
+    font-size: 1em !important; 
+    line-height: 0px !important; 
+}
+/*#fh5co-aside #fh5co-logo img{
+	display: none;
+}*/
+#webform_submission_subscription_add_form-ajax input#edit-email {
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    -ms-border-radius: 100px;
+    border-radius: 100px;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -ms-box-shadow: none !important;
+    -o-box-shadow: none !important;
+    box-shadow: none !important;
+    padding-right: 150px;
+    padding-left: 30px;
+    border: none !important;
+    background: #eeeeee;
+    height: 72px;
+    font-size: 18px;
+}
+
+input#edit-email {
+    display: block;
+    width: 100%;
+    height: 42px;
+    padding: 10px 20px;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #555555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+#webform_submission_subscription_add_form-ajax input#edit-actions-submit {
+    width: 100px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-weight: 700;
+    height: 72px;
+    font-size: 14px;
+    color: #fff;
+    border: none !important;
+    background: #0bbbe6;
+    color: #fff;
+    text-transform: uppercase;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}   
+/*#fh5co-main-content #clockdiv {
+    font-size: 25px;
+    font-weight: 600;
+}*/
+/*.....media-style..........*/
+
+@media screen and (max-width: 600px) and (min-width: 120px) {
+  #clockdiv > div{
+	display: inline-block;
+	padding: 0.5% 1.3% 3% 0%;
+   }
+  #clockdiv div > span{
+	font-size: 40px;
+   }
+  .smalltext{
+    margin: 0% 0%; 
+    font-size: 15px;
+   }
+
+ }
+
+@media screen and (max-width: 1100px) and (min-width: 800px) {
+	#webform_submission_subscription_add_form-ajax input#edit-actions-submit{
+		right: 0%;
+    	top: 74%
+	}
+}
+@media screen and (max-width: 800px) and (min-width: 500px) {
+	#webform_submission_subscription_add_form-ajax input#edit-actions-submit{
+		right: 0%;
+    	top: 65%
+	}
+}
+@media screen and (max-width: 499px) and (min-width: 360px) {
+	#webform_submission_subscription_add_form-ajax input#edit-actions-submit{
+		right: 0%;
+    	top: 69%
+	}
+}
+@media screen and (max-width: 360px) and (min-width: 300px) {
+	#webform_submission_subscription_add_form-ajax input#edit-actions-submit{
+		right: 0%;
+    	top: 72%
+	}
+}
+@media screen and (max-width: 1100px) and (min-width: 250px) {
+#fh5co-footer {
+    position: absolute;
+ }
+}
+
+@media screen and (min-width: 768px){
+body {
+     margin-top: 0px !important; 
+ }
+}
+
+#block-yg-launcher-page-title h1 {
+    margin-bottom: 10px !important;
+    font-size: 35px !important;
+    font-weight: 800 !important;
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+
+/*login*/
+/*.wrapper-nice-login.create-account-form{
+    width: 100%;
+    border: 1px solid #ccc;
+    background: #FFF;
+    margin: 0 0 5px;
+    padding: 10px;
+    border-radius: 4px;
+}*/
+.wrapper-nice-login label{
+    font-size: 15px;
+}
+.wrapper-nice-login #edit-name,#edit-pass,#edit-mail,select#edit-timezone--2,input#edit-user-picture-0-upload {
+    width: 100%;
+    border: 1px solid #ccc;
+    background: #FFF;
+    margin: 0 0 5px;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 15px;
+}
+.wrapper-nice-login input#edit-submit {
+    cursor: pointer;
+    border: none;
+    background: #2fcef5 !important;
+    color: #FFF;
+    margin: 0 0 5px;
+    padding: 10px;
+    font-size: 13px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.wrapper-nice-login #edit-name--description,#edit-pass--description,#edit-mail--description,#edit-user-picture-0-upload--description,#edit-contact--2--description,#edit-timezone--2--description{
+    margin: 10px auto;
+    font-size: 14px;
+    color: #bdbdbd;
+  }  

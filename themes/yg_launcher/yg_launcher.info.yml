@@ -1,0 +1,22 @@
+name : YG Launcher
+description: Stylish Coming soon theme for Drupal 8.
+# core: 8.x
+type: theme
+screenshot: images/screenshot.png
+
+libraries:
+  - yg_launcher/global-styling
+
+regions:
+  content: 'Content'
+  site_branding: 'Site Branding'
+  subscribe: 'Email Subscribe'
+
+
+
+
+# Information added by Drupal.org packaging script on 2018-03-05
+version: '8.x-1.0-alpha1'
+core: '8.x'
+project: 'yg_launcher'
+datestamp: 1520249287

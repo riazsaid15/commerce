@@ -1,0 +1,27 @@
+.atl__lr {
+  margin: 0 -0.625em;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.atl__lc {
+  flex: 0 0 auto;
+  padding: 0 0.625em;
+  width: 100%;
+}
+
+.bp--at-core-simple-tablet-isolate .atl--grid-4x4 > .atl__cw > .atl__lc {
+  flex: 0 0 auto;
+  width: 50%;
+}
+.bp--at-core-simple-tablet-isolate .atl--grid-4x4 > .atl__cw > .atl__lc:nth-of-type(odd):last-child {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.bp--at-core-simple-wide .atl--grid-4x4 > .atl__cw > .atl__lc {
+  flex: 0 0 auto;
+  width: 25%;
+}

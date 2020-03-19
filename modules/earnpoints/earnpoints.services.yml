@@ -1,0 +1,6 @@
+services:
+  earnpoints.order_complete:
+    class: Drupal\earnpoints\EventSubscriber\OrderCompleteSubscriber
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: event_subscriber }
