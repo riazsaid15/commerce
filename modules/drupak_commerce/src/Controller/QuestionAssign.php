@@ -1,8 +1,8 @@
 <?php
 
-
 namespace Drupal\drupak_commerce\Controller;
 
+use Drupal\user\Entity\User;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\Entity\Node;
 use Drupal\private_message\Entity\PrivateMessage;
@@ -10,12 +10,12 @@ use Drupal\private_message\Entity\PrivateMessage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Url;
 
-//use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Link;
-use Drupal\Core\Render\Markup;
-
+// Use Drupal\Core\Entity\EntityInterface;.
 use Drupal\Component\Render\FormattableMarkup;
 
+/**
+ *
+ */
 class QuestionAssign extends ControllerBase {
 
   /**
@@ -35,7 +35,7 @@ class QuestionAssign extends ControllerBase {
     $user_id = $private_message->get("owner")->getValue()[0]['target_id'];
     $node_id = $private_message->get("field_node_reference")
       ->getValue()[0]['target_id'];
-    $nodes = \Drupal\node\Entity\Node::load($node_id);
+    $nodes = Node::load($node_id);
     $node_title = $nodes->getTitle();
     $delivery = $private_message->get("field_delivery")->getValue()[0]['value'];
     $logged_in = \Drupal::currentUser()->id();
@@ -45,7 +45,6 @@ class QuestionAssign extends ControllerBase {
     //
     // kint($delivery);
     // kint($logged_in = \Drupal::currentUser()->id());
-
     $n_title = 'Order = ' . $node_title;
     /* Creating relation node used for order */
     $node = Node::create([
@@ -72,11 +71,11 @@ class QuestionAssign extends ControllerBase {
     ]);
     $node->save();
     $new_node_id = $node->id();
-    $user1 = \Drupal\user\Entity\User::load($logged_in);
-    $user2 = \Drupal\user\Entity\User::load($user_id);
+    $user1 = User::load($logged_in);
+    $user2 = User::load($user_id);
     $user1_name = $user1->getUsername();
     $members = [$user1, $user2];
-    //kint($members);
+    // kint($members);
     $service = \Drupal::service('private_message.service');
 
     // This will create a thread if one does not exist.
@@ -85,12 +84,11 @@ class QuestionAssign extends ControllerBase {
     // Add a Message to the thread.
     $private_message = PrivateMessage::create();
     $private_message->set('owner', $user2);
-    //    $linkText = 'Node Title';
+    // $linkText = 'Node Title';
     //    $linkMarkup = Markup::create($linkText);
     //    $link = Link::fromTextAndUrl($linkMarkup, Url::fromUri('entity:node/1'));
     //    $link = $link->toRenderable();
-    //$form['#title'] = $this->t("'%name' block", array('%name' => $info[$block->delta]['info']));
-
+    // $form['#title'] = $this->t("'%name' block", array('%name' => $info[$block->delta]['info']));
     $link = Url::fromRoute('entity.node.canonical', ['node' => $new_node_id])
       ->toString();
     $formatted = new FormattableMarkup(
@@ -100,10 +98,9 @@ class QuestionAssign extends ControllerBase {
       ]
     );
 
-
-    //kint($link);
+    // kint($link);
     $msg = t("Congrats you have got order from $user1_name on Question @formatted", ['@formatted' => $formatted]);
-    //kint($msg);
+    // kint($msg);
     // $rendered_msg = render($msg);
     // $msg_markup = Markup::create($rendered_msg);
     // kint($msg_markup);
@@ -113,7 +110,8 @@ class QuestionAssign extends ControllerBase {
     $private_message_thread->addMessage($private_message)->save();
 
     $path = "internal:/node/$new_node_id";
-    $url = Url::fromUri($path); // choose a path
+    // Choose a path.
+    $url = Url::fromUri($path);
     $destination = $url->toString();
     // ksm($destination);
     // We want to redirect user on login.

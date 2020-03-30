@@ -1,16 +1,19 @@
 <?php
 
-
 namespace Drupal\drupak_commerce\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Entity\EntityStorageException;
 use Drupal\node\Entity\Node;
 
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Url;
 
+/**
+ * Class DeliverNow.
+ *
+ * @package Drupal\drupak_commerce\Controller
+ */
 class DeliverNow extends ControllerBase {
 
   /**
@@ -19,7 +22,7 @@ class DeliverNow extends ControllerBase {
    * @param $id
    *
    * @return array
-   * @throws EntityStorageException
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function deliver($id) {
     $build = [];
@@ -32,7 +35,6 @@ class DeliverNow extends ControllerBase {
     $node->set("comment", 2);
     $node->save();
 
-
     $path = "entity:node/$id";
     $url = Url::fromUri($path);
     // Choose a path.
@@ -41,7 +43,6 @@ class DeliverNow extends ControllerBase {
     // We want to redirect user on login.
     $response = new RedirectResponse($destination, 301);
     $response->send();
-
 
     return $build;
   }

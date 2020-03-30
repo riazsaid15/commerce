@@ -4,6 +4,7 @@
  * @file
  */
 
+use Drupal\comment\CommentInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\commerce_product\Entity\ProductVariation;
@@ -49,7 +50,11 @@ function drupak_commerce_form_alter(&$form, FormStateInterface $form_state, $for
 }
 
 /**
+ * @param \Drupal\Core\Entity\EntityInterface $entity
  *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ * @throws \Drupal\Core\Entity\EntityStorageException
  */
 function drupak_commerce_entity_insert(EntityInterface $entity) {
   if ($entity->bundle() == "article") {
@@ -135,8 +140,27 @@ function drupak_commerce_entity_insert(EntityInterface $entity) {
     }
   }
   if ($entity->bundle() == 'comment') {
-    kint($entity);
-    exit;
+
   }
+
+}
+
+/**
+ * @param array $links
+ * @param \Drupal\comment\CommentInterface $entity
+ * @param array $context
+ */
+function drupak_commerce_comment_links_alter(array &$links, CommentInterface $entity, array &$context) {
+  // Unset the "Reply" link
+  if(isset($links['comment']['#links']['comment-approve'])) {
+    unset($links['comment']['#links']['comment-approve']);
+  }
+}
+
+/**
+ * @param $comment
+ */
+function drupak_commerce_comment_insert($comment) {
+  kint($comment);
 
 }
