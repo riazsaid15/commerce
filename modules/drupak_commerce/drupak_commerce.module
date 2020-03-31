@@ -60,7 +60,7 @@ function drupak_commerce_entity_insert(EntityInterface $entity) {
   if ($entity->bundle() == "article") {
 
     $featured = $entity->get('field_featured')->getValue()[0]['value'];
-    if ($featured == 'no') {
+    if ($featured == 'yes') {
       $nid = $entity->get('nid')->getValue()[0]['value'];
       $price = $entity->get('field_product_price')->getValue()[0]['number'];
       // $type = $entity->get('field_question_type')->getValue()[0]['value'];
@@ -137,6 +137,12 @@ function drupak_commerce_entity_insert(EntityInterface $entity) {
       $response->send();
       return;
       // setRedirect('commerce_checkout.form', ['commerce_order' => $cart->id()])
+    }else {
+      $id = $entity->id();
+      $nodeObject = Node::load($id);
+      // Comment 2 means open.
+      $nodeObject->set("comment", 2);
+      $nodeObject->save();
     }
   }
 }
@@ -157,8 +163,12 @@ function drupak_commerce_comment_links_alter(array &$links, CommentInterface $en
  * @param $comment
  */
 function drupak_commerce_comment_insert($comment) {
+
   $node_id = $comment->get('entity_id')->getValue()[0]['target_id'];
 
+  $node = Node::load($node_id);
+  $nodeFeatured = $node->get('field_featured')->getValue()[0]['value'];
+  if($nodeFeatured == 'yes') {
   $query = \Drupal::entityQuery('node')
     ->condition('status', 1)
     ->condition('field_question_from', $node_id)
@@ -174,10 +184,17 @@ function drupak_commerce_comment_insert($comment) {
     $assignNode->save();
   }
 
-  $node = Node::load($node_id);
   // Comment 1 means close.
   $node->set("comment", 1);
   $node->save();
+} else {
+  $commentID = $comment->id();
+  // Comment load
+  $comment2 = \Drupal::entityTypeManager()->getStorage('comment')->load($commentID);
+  // Approve the loaded comment.
+  $comment2->set('status', 1);
+  $comment2->save();
+}
 }
 
 /**
