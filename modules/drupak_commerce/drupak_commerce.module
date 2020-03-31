@@ -171,9 +171,13 @@ function drupak_commerce_comment_insert($comment) {
     // Node Load
     $assignNode = Node::load($node);
     $assignNode->set('field_deliveryy', $d_date);
-    $assignNode->set('status', 0);
     $assignNode->save();
   }
+
+  $node = Node::load($node_id);
+  // Comment 1 means close.
+  $node->set("comment", 1);
+  $node->save();
 }
 
 /**
