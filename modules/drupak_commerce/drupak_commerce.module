@@ -5,6 +5,7 @@
  */
 
 use Drupal\comment\CommentInterface;
+use Drupal\commerce_funds\Entity\Transaction;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\commerce_product\Entity\ProductVariation;
@@ -139,9 +140,7 @@ function drupak_commerce_entity_insert(EntityInterface $entity) {
       // setRedirect('commerce_checkout.form', ['commerce_order' => $cart->id()])
     }
   }
-  if ($entity->bundle() == 'comment') {
 
-  }
 
 }
 
@@ -158,11 +157,42 @@ function drupak_commerce_comment_links_alter(array &$links, CommentInterface $en
 }
 
 /**
- * @param $comment
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
  */
-function drupak_commerce_comment_insert($comment) {
-  kint($comment);
+function drupak_commerce_entity_update(Drupal\Core\Entity\EntityInterface $entity) {
+  if($entity->bundle() == 'comment') {
+    $comment_author = $entity->get('uid')->getValue()[0]['target_id'];
+    $node_id = $entity->get('entity_id')->getValue()[0]['target_id'];
+    // kint($node_id);
+    $nodeObject = Node::load($node_id);
+    $nodeFeatured = $nodeObject->get('field_featured')->getValue()[0]['value'];
+    $nodeIssuePrice = $nodeObject->get('field_product_price')->getValue()['0'];
+    $nodeAutherId = $nodeObject->get('uid')->getValue()[0]['target_id'];
+    if($nodeFeatured == 'yes') {
+      // Calculate the fee applied to the transaction.
+      $fee_applied = \Drupal::service('commerce_funds.fees_manager')->calculateTransactionFee($amount, $currency, 'transfer');
+      // Create a new transaction.
+      $transaction = Transaction::create([
+        'issuer' => $nodeAutherId,
+        'recipient' => $comment_author,
+        'type' => 'transfer',
+        'method' => 'internal',
+        'brut_amount' => $nodeIssuePrice['number'],
+        'net_amount' => $nodeIssuePrice['number'],
+        'fee' => $fee_applied['fee'],
+        'currency' => $nodeIssuePrice['currency_code'],
+        'status' => 'Completed',
+        'notes' => t('Programmtically Transaction paid for done service.'),
+      ]);
+      // Save the transaction to the db.
+      $transaction->save();
 
+      // Perform the transaction to update the differents balances.
+      \Drupal::service('commerce_funds.transaction_manager')->performTransaction($transaction);
+    }
+  }
 }
 
 function drupak_commerce_entity_update(Drupal\Core\Entity\EntityInterface $entity) {
